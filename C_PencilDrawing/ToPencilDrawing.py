@@ -3,10 +3,14 @@ import numpy as np
 
 
 # 将图像以灰度图的方式打开并将数据转为float存入np中
-filePath = 'team.jpg'
-a = np.asarray(Image.open(filePath).convert('L')).astype('float')
+OrginFilePath = 'team.jpg' # 待转换的原始文件
+# "这里是输出图片的路径"
+outputPath = "./output_pencil_drawing.jpg"
 
-depth = 10.                      # (0-100)
+
+a = np.asarray(Image.open(OrginFilePath).convert('L')).astype('float')
+
+depth = 16.                      # (0-100)
 grad = np.gradient(a)             #取图像灰度的梯度值
 grad_x, grad_y =grad               #分别取横纵图像梯度值
 grad_x = grad_x*depth/100.
@@ -27,6 +31,4 @@ b = b.clip(0,255)    #clip函数将区间外的数字剪除到区间边缘
 
 im = Image.fromarray(b.astype('uint8'))  #重构图像
 
-# "这里是输出图片的路径"
-outputPath = "./output_pencil_drawing.jpg"
 im.save(outputPath)

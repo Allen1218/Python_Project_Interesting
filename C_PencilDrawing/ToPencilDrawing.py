@@ -29,6 +29,6 @@ dz = np.sin(vec_el)                  #光源对z 轴的影响
 b = 255*(dx*uni_x + dy*uni_y + dz*uni_z)     #光源归一化
 b = b.clip(0,255)    #clip函数将区间外的数字剪除到区间边缘
 
-im = Image.fromarray(b.astype('uint8'))  #重构图像
+im = Image.fromarray(b.astype('uint16'))  #重构图像
 
 im.save(outputPath)

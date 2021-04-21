@@ -1,6 +1,7 @@
 import flask, json
 from flask import request
 from flask_cors import CORS
+import pyttsx3
 
 '''
 flask： web框架，通过flask提供的装饰器@server.route()将普通函数转换为服务
@@ -30,6 +31,9 @@ def login():
     if username and pwd:
         if username == 'xiaoming' and pwd == '111':
             resu = {'code': 200, 'message': '登录成功'}
+            msg = "Welcome user " + username + " login. "
+            msg += "Please enjoy this system. hahaha..."
+            test(msg)
             return json.dumps(resu, ensure_ascii=False)  # 将字典转换为json串, json是字符串
         else:
             resu = {'code': -1, 'message': '账号密码错误'}
@@ -37,6 +41,27 @@ def login():
     else:
         resu = {'code': 10001, 'message': '参数不能为空！'}
         return json.dumps(resu, ensure_ascii=False)
+
+def test(msg):
+    # msg = '''Its better to be alone, than to be with someone, you're not happy to be with...'''
+
+    # teacher = pyttsx3.init()
+    # rate = teacher.getProperty('rate')
+    # teacher.setProperty('rate', rate - 80)
+    # teacher.say(msg)
+    # teacher.runAndWait()
+
+    engine = pyttsx3.init()
+    voices = engine.getProperty('voices')
+    rate = engine.getProperty('rate')
+    engine.setProperty('rate', rate - 80)
+    # 0：汉语女声；1：英语男声；2：英语女声；3：日语女声；4：韩语女声；5：英语女声；6：粤语女声；7：台语女声
+    voices = engine.setProperty('voice', voices[1].id)
+
+    engine.say(msg)
+
+    engine.runAndWait()
+
 
 
 if __name__ == '__main__':
